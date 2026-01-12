@@ -10,69 +10,431 @@
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog&&window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init ts ns yi rs os Qr es capture Hi calculateEventProperties hs register register_once register_for_session unregister unregister_for_session fs getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty vs us createPersonProfile cs Yr ps opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing ls debug O ds getPageViewId captureTraceFeedback captureTraceMetric Vr".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
     posthog.init('phc_vvdIv14T0WugpbgdIaSMKrqWslPHSFOVzJZbieiN5Zs', {
       api_host: 'https://us.i.posthog.com',
-      defaults: '2025-11-30',
       person_profiles: 'identified_only',
-
-      // Make the anonymous ID as sticky as possible
       persistence: 'localStorage+cookie',
       cookie_expiration: 3650
     });
   </script>
 
-  <!-- Teddy tracking -->
-  <script src="/track.js"></script>
+  <!-- Teddy tracking (your existing file) -->
+  <script src="/track.js" defer></script>
 
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0b0c10;
-      color: #fff;
+    :root{
+      --bg0:#07070a;
+      --bg1:#0b0c10;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.10);
+      --text:#f3f4f6;
+      --muted:#a7abb3;
+      --shadow: 0 16px 50px rgba(0,0,0,.55);
+      --ring: rgba(255,255,255,.18);
+      --accent: rgba(255,255,255,.22);
+      --radius: 18px;
     }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(900px 500px at 18% 12%, rgba(255,255,255,.10), transparent 55%),
+        radial-gradient(700px 450px at 90% 20%, rgba(255,255,255,.06), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      color: var(--text);
     }
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
+
+    .wrap{
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 22px 16px 64px;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+    header{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(1.65rem, 2.6vw, 2.35rem);
+      letter-spacing: .2px;
+    }
+
+    .sub{
+      margin:0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.35;
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+      font-size: .92rem;
+      white-space:nowrap;
+    }
+
+    .grid{
+      margin-top: 16px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
-    img, video {
-      width: 100%;
-      border-radius: 12px;
-      object-fit: cover;
-      display: block;
+
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-    .caption {
-      color: #aaa;
-      margin-bottom: 20px;
+    @media (max-width: 520px){
+      header{ align-items:flex-start; flex-direction:column; }
+      .chip{ width: fit-content; }
+      .grid{ grid-template-columns: 1fr; gap: 12px; }
+    }
+
+    .tile{
+      position: relative;
+      border-radius: var(--radius);
+      overflow:hidden;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      cursor: zoom-in;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+    }
+
+    .tile:focus-visible{
+      box-shadow: 0 0 0 3px var(--ring), 0 16px 55px rgba(0,0,0,.55);
+    }
+
+    .tile img{
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.01);
+      transition: transform .25s ease, filter .25s ease;
+    }
+
+    @media (max-width: 520px){
+      .tile img{ height: 320px; }
+    }
+
+    .tile:hover img{
+      transform: scale(1.05);
+      filter: brightness(1.03);
+    }
+
+    .badge{
+      position:absolute;
+      left: 12px;
+      bottom: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.92);
+      font-size: .88rem;
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      pointer-events:none;
+    }
+
+    /* Lightbox */
+    .lightbox{
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      background: rgba(0,0,0,.72);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+    }
+    .lightbox.open{ display:flex; }
+
+    .lb-card{
+      width: min(980px, 100%);
+      max-height: 86vh;
+      background: rgba(20,20,24,.75);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .lb-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+    }
+
+    .lb-title{
+      color: rgba(255,255,255,.9);
+      font-size: .95rem;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 75%;
+    }
+
+    .lb-actions{
+      display:flex;
+      gap: 8px;
+    }
+
+    .btn{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.92);
+      padding: 8px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: .92rem;
+      line-height: 1;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width: 40px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover{ background: rgba(255,255,255,.12); }
+    .btn:active{ transform: translateY(1px); }
+
+    .lb-body{
+      position: relative;
+      padding: 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(0,0,0,.35);
+    }
+
+    .lb-img{
+      width: 100%;
+      height: auto;
+      max-height: calc(86vh - 56px);
+      object-fit: contain;
+      display:block;
+    }
+
+    .nav{
+      position:absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 999px;
+      width: 44px;
+      height: 44px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      cursor:pointer;
+      user-select:none;
+    }
+    .nav:hover{ background: rgba(255,255,255,.14); }
+    .nav.prev{ left: 12px; }
+    .nav.next{ right: 12px; }
+
+    @media (max-width: 520px){
+      .nav{ width: 40px; height: 40px; }
+      .nav.prev{ left: 10px; }
+      .nav.next{ right: 10px; }
     }
   </style>
 </head>
 
 <body>
-  <div class="container" data-dump-id="1">
-    <h1>Teddy Dumps 🐾</h1>
-    <p class="caption">Dump #1 — The origin story</p>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Teddy Dumps 🐾</h1>
+        <p class="sub">Dump #1</p>
+      </div>
+      <div class="chip" aria-label="Album info">✨ tap a pic to zoom</div>
+    </header>
 
-    <div class="grid">
-  <img src="/images/photo_01.jpeg" data-photo-id="photo_01" alt="Teddy photo 01" />
-  <img src="/images/photo_02.jpeg" data-photo-id="photo_02" alt="Teddy photo 02" />
-  <img src="/images/photo_03.jpeg" data-photo-id="photo_03" alt="Teddy photo 03" />
-  <img src="/images/photo_04.png"  data-photo-id="photo_04" alt="Teddy photo 04" />
-  <img src="/images/photo_05.jpeg" data-photo-id="photo_05" alt="Teddy photo 05" />
-  <img src="/images/photo_06.jpeg" data-photo-id="photo_06" alt="Teddy photo 06" />
-  <img src="/images/photo_07.jpeg" data-photo-id="photo_07" alt="Teddy photo 07" />
-  <img src="/images/photo_08.jpeg" data-photo-id="photo_08" alt="Teddy photo 08" />
-  <img src="/images/photo_09.jpeg" data-photo-id="photo_09" alt="Teddy photo 09" />
-  <img src="/images/photo_10.jpeg" data-photo-id="photo_10" alt="Teddy photo 10" />
+    <main class="grid" data-dump-id="1" id="gallery">
+      <!-- Make sure these extensions match your repo -->
+      <button class="tile" type="button" data-src="/images/photo_01.jpeg" data-photo-id="photo_01" aria-label="Open Teddy photo 01">
+        <img src="/images/photo_01.jpeg" alt="Teddy photo 01" loading="lazy" />
+        <span class="badge">🐾 Teddy photo 01</span>
+      </button>
+
+      <button class="tile" type="button" data-src="/images/photo_02.jpeg" data-photo-id="photo_02" aria-label="Open Teddy photo 02">
+        <img src="/images/photo_02.jpeg" alt="Teddy photo 02" loading="lazy" />
+        <span class="badge">🐾 Teddy photo 02</span>
+      </button>
+
+      <button class="tile" type="button" data-src="/images/photo_03.jpeg" data-photo-id="photo_03" aria-label="Open Teddy photo 03">
+        <img src="/images/photo_03.jpeg" alt="Teddy photo 03" loading="lazy" />
+        <span class="badge">🐾 Teddy photo 03</span>
+      </button>
+
+      <button class="tile" type="button" data-src="/images/photo_04.png" data-photo-id="photo_04" aria-label="Open Teddy photo 04">
+        <img src="/images/photo_04.png" alt="Teddy photo 04" loading="lazy" />
+        <span class="badge">🐾 Teddy photo 04</span>
+      </button>
+
+      <button class="tile" type="button" data-src="/images/photo_05.jpeg" data-photo-id="photo_05" aria-label="Open Teddy photo 05">
+        <img src="/images/photo_05.jpeg" alt="Teddy photo 05" loading="lazy" />
+        <span class="badge">🐾 Teddy photo 05</span>
+      </button>
+
+      <button class="tile" type="button" data-src="/images/photo_06.jpeg" data-photo-id="photo_06" aria-label="Open Teddy photo 06">
+        <img src="/images/photo_06.jpeg" alt="Teddy photo 06" loading="lazy" />
+        <span class="badge">🐾 Teddy photo 06</span>
+      </button>
+
+      <button class="tile" type="button" data-src="/images/photo_07.jpeg" data-photo-id="photo_07" aria-label="Open Teddy photo 07">
+        <img src="/images/photo_07.jpeg" alt="Teddy photo 07" loading="lazy" />
+        <span class="badge">🐾 Teddy photo 07</span>
+      </button>
+
+      <button class="tile" type="button" data-src="/images/photo_08.jpeg" data-photo-id="photo_08" aria-label="Open Teddy photo 08">
+        <img src="/images/photo_08.jpeg" alt="Teddy photo 08" loading="lazy" />
+        <span class="badge">🐾 Teddy photo 08</span>
+      </button>
+
+      <button class="tile" type="button" data-src="/images/photo_09.jpeg" data-photo-id="photo_09" aria-label="Open Teddy photo 09">
+        <img src="/images/photo_09.jpeg" alt="Teddy photo 09" loading="lazy" />
+        <span class="badge">🐾 Teddy photo 09</span>
+      </button>
+
+      <button class="tile" type="button" data-src="/images/photo_10.jpeg" data-photo-id="photo_10" aria-label="Open Teddy photo 10">
+        <img src="/images/photo_10.jpeg" alt="Teddy photo 10" loading="lazy" />
+        <span class="badge">🐾 Teddy photo 10</span>
+      </button>
+    </main>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lb-card" role="dialog" aria-modal="true" aria-label="Photo viewer">
+      <div class="lb-top">
+        <div class="lb-title" id="lbTitle">Photo</div>
+        <div class="lb-actions">
+          <button class="btn" id="lbClose" type="button" aria-label="Close">✕</button>
+        </div>
+      </div>
+
+      <div class="lb-body" id="lbBody">
+        <div class="nav prev" id="lbPrev" aria-label="Previous" title="Previous">‹</div>
+        <img class="lb-img" id="lbImg" alt="" />
+        <div class="nav next" id="lbNext" aria-label="Next" title="Next">›</div>
+      </div>
     </div>
   </div>
+
+  <script>
+    // Simple lightbox (mobile-friendly)
+    const tiles = Array.from(document.querySelectorAll('.tile'));
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbTitle = document.getElementById('lbTitle');
+    const lbClose = document.getElementById('lbClose');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+
+    let currentIndex = 0;
+
+    function openAt(i){
+      currentIndex = i;
+      const t = tiles[currentIndex];
+      const src = t.getAttribute('data-src');
+      const photoId = t.getAttribute('data-photo-id') || `photo_${String(i+1).padStart(2,'0')}`;
+      lbImg.src = src;
+      lbImg.alt = t.querySelector('img')?.alt || photoId;
+      lbTitle.textContent = `🐾 ${photoId}`;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+
+      // Optional: track “opened” separately from “clicked”
+      if (window.posthog) {
+        posthog.capture('teddy_photo_opened', {
+          photo_id: photoId,
+          src: src,
+          dump_id: document.querySelector('#gallery')?.getAttribute('data-dump-id') || '1'
+        });
+      }
+    }
+
+    function closeLb(){
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lbImg.src = '';
+    }
+
+    function prev(){
+      openAt((currentIndex - 1 + tiles.length) % tiles.length);
+    }
+
+    function next(){
+      openAt((currentIndex + 1) % tiles.length);
+    }
+
+    tiles.forEach((tile, idx) => {
+      tile.addEventListener('click', () => openAt(idx), { passive: true });
+    });
+
+    lbClose.addEventListener('click', closeLb);
+
+    // Click outside the card closes
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLb();
+    });
+
+    lbPrev.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
+    lbNext.addEventListener('click', (e) => { e.stopPropagation(); next(); });
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') next();
+    });
+
+    // Swipe support (basic)
+    let touchX = null;
+    const lbBody = document.getElementById('lbBody');
+    lbBody.addEventListener('touchstart', (e) => {
+      touchX = e.changedTouches[0].clientX;
+    }, { passive: true });
+    lbBody.addEventListener('touchend', (e) => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      touchX = null;
+      if (Math.abs(dx) < 40) return;
+      if (dx > 0) prev(); else next();
+    }, { passive: true });
+  </script>
 </body>
 </html>
