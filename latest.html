@@ -478,7 +478,7 @@
     let currentIndex = 0;
 
     function getActiveTiles() {
-      const pane = document.querySelector('.dump-pane.active');
+      const pane = document.getElementById(`dump${activeDump}pane`);
       return pane ? Array.from(pane.querySelectorAll('.tile')) : [];
     }
 
