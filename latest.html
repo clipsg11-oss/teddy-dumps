@@ -268,6 +268,52 @@
       .nav.prev{ left: 10px; }
       .nav.next{ right: 10px; }
     }
+
+    /* Dump switcher */
+    .dump-switcher{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 6px;
+      border-radius: 999px;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    .sw-btn{
+      font-family: inherit;
+      font-size: .88rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .18s ease, color .18s ease, border-color .18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sw-btn:hover{ color: var(--text); background: rgba(255,255,255,.07); }
+    .sw-btn.active{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.18);
+      color: var(--text);
+    }
+    .sw-btn .new-badge{
+      display: inline-block;
+      font-size: .68rem;
+      padding: 1px 5px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      color: var(--text);
+      margin-left: 4px;
+      vertical-align: middle;
+      letter-spacing: .3px;
+    }
+
+    /* Hidden pane */
+    .dump-pane{ display: none; }
+    .dump-pane.active{ display: contents; }
   </style>
 </head>
 
@@ -276,62 +322,111 @@
     <header>
       <div class="title">
         <h1>Teddy Dumps 🐾</h1>
-        <p class="sub">Dump #1</p>
+        <p class="sub" id="dumpSub">Dump #2</p>
       </div>
-      <div class="chip" aria-label="Album info">✨ tap a pic to zoom</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;">
+        <nav class="dump-switcher" aria-label="Switch dump">
+          <button class="sw-btn" data-dump="1" type="button">Dump #1</button>
+          <button class="sw-btn active" data-dump="2" type="button">Dump #2 <span class="new-badge">new</span></button>
+        </nav>
+        <div class="chip" aria-label="Album info">✨ tap a pic to zoom</div>
+      </div>
     </header>
 
-    <main class="grid" data-dump-id="1" id="gallery">
-      <!-- Make sure these extensions match your repo -->
-      <button class="tile" type="button" data-src="/images/photo_01.jpeg" data-photo-id="photo_01" aria-label="Open Teddy photo 01">
-        <img src="/images/photo_01.jpeg" alt="Teddy photo 01" loading="lazy" />
-        <span class="badge">🐾 Teddy photo 01</span>
-      </button>
+    <main class="grid" id="gallery">
+      <!-- ── Dump 1 ── -->
+      <div class="dump-pane" data-dump-id="1" id="dump1pane">
+        <button class="tile" type="button" data-src="/images/photo_01.jpeg" data-photo-id="photo_01" aria-label="Open Teddy photo 01">
+          <img src="/images/photo_01.jpeg" alt="Teddy photo 01" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 01</span>
+        </button>
 
-      <button class="tile" type="button" data-src="/images/photo_02.jpeg" data-photo-id="photo_02" aria-label="Open Teddy photo 02">
-        <img src="/images/photo_02.jpeg" alt="Teddy photo 02" loading="lazy" />
-        <span class="badge">🐾 Teddy photo 02</span>
-      </button>
+        <button class="tile" type="button" data-src="/images/photo_02.jpeg" data-photo-id="photo_02" aria-label="Open Teddy photo 02">
+          <img src="/images/photo_02.jpeg" alt="Teddy photo 02" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 02</span>
+        </button>
 
-      <button class="tile" type="button" data-src="/images/photo_03.jpeg" data-photo-id="photo_03" aria-label="Open Teddy photo 03">
-        <img src="/images/photo_03.jpeg" alt="Teddy photo 03" loading="lazy" />
-        <span class="badge">🐾 Teddy photo 03</span>
-      </button>
+        <button class="tile" type="button" data-src="/images/photo_03.jpeg" data-photo-id="photo_03" aria-label="Open Teddy photo 03">
+          <img src="/images/photo_03.jpeg" alt="Teddy photo 03" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 03</span>
+        </button>
 
-      <button class="tile" type="button" data-src="/images/photo_04.png" data-photo-id="photo_04" aria-label="Open Teddy photo 04">
-        <img src="/images/photo_04.png" alt="Teddy photo 04" loading="lazy" />
-        <span class="badge">🐾 Teddy photo 04</span>
-      </button>
+        <button class="tile" type="button" data-src="/images/photo_04.png" data-photo-id="photo_04" aria-label="Open Teddy photo 04">
+          <img src="/images/photo_04.png" alt="Teddy photo 04" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 04</span>
+        </button>
 
-      <button class="tile" type="button" data-src="/images/photo_05.jpeg" data-photo-id="photo_05" aria-label="Open Teddy photo 05">
-        <img src="/images/photo_05.jpeg" alt="Teddy photo 05" loading="lazy" />
-        <span class="badge">🐾 Teddy photo 05</span>
-      </button>
+        <button class="tile" type="button" data-src="/images/photo_05.jpeg" data-photo-id="photo_05" aria-label="Open Teddy photo 05">
+          <img src="/images/photo_05.jpeg" alt="Teddy photo 05" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 05</span>
+        </button>
 
-      <button class="tile" type="button" data-src="/images/photo_06.jpeg" data-photo-id="photo_06" aria-label="Open Teddy photo 06">
-        <img src="/images/photo_06.jpeg" alt="Teddy photo 06" loading="lazy" />
-        <span class="badge">🐾 Teddy photo 06</span>
-      </button>
+        <button class="tile" type="button" data-src="/images/photo_06.jpeg" data-photo-id="photo_06" aria-label="Open Teddy photo 06">
+          <img src="/images/photo_06.jpeg" alt="Teddy photo 06" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 06</span>
+        </button>
 
-      <button class="tile" type="button" data-src="/images/photo_07.jpeg" data-photo-id="photo_07" aria-label="Open Teddy photo 07">
-        <img src="/images/photo_07.jpeg" alt="Teddy photo 07" loading="lazy" />
-        <span class="badge">🐾 Teddy photo 07</span>
-      </button>
+        <button class="tile" type="button" data-src="/images/photo_07.jpeg" data-photo-id="photo_07" aria-label="Open Teddy photo 07">
+          <img src="/images/photo_07.jpeg" alt="Teddy photo 07" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 07</span>
+        </button>
 
-      <button class="tile" type="button" data-src="/images/photo_08.jpeg" data-photo-id="photo_08" aria-label="Open Teddy photo 08">
-        <img src="/images/photo_08.jpeg" alt="Teddy photo 08" loading="lazy" />
-        <span class="badge">🐾 Teddy photo 08</span>
-      </button>
+        <button class="tile" type="button" data-src="/images/photo_08.jpeg" data-photo-id="photo_08" aria-label="Open Teddy photo 08">
+          <img src="/images/photo_08.jpeg" alt="Teddy photo 08" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 08</span>
+        </button>
 
-      <button class="tile" type="button" data-src="/images/photo_09.jpeg" data-photo-id="photo_09" aria-label="Open Teddy photo 09">
-        <img src="/images/photo_09.jpeg" alt="Teddy photo 09" loading="lazy" />
-        <span class="badge">🐾 Teddy photo 09</span>
-      </button>
+        <button class="tile" type="button" data-src="/images/photo_09.jpeg" data-photo-id="photo_09" aria-label="Open Teddy photo 09">
+          <img src="/images/photo_09.jpeg" alt="Teddy photo 09" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 09</span>
+        </button>
 
-      <button class="tile" type="button" data-src="/images/photo_10.jpeg" data-photo-id="photo_10" aria-label="Open Teddy photo 10">
-        <img src="/images/photo_10.jpeg" alt="Teddy photo 10" loading="lazy" />
-        <span class="badge">🐾 Teddy photo 10</span>
-      </button>
+        <button class="tile" type="button" data-src="/images/photo_10.jpeg" data-photo-id="photo_10" aria-label="Open Teddy photo 10">
+          <img src="/images/photo_10.jpeg" alt="Teddy photo 10" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 10</span>
+        </button>
+      </div>
+
+      <!-- ── Dump 2 — add your photos here ── -->
+      <!--
+        To populate Dump 2:
+        1. Put photos in /images/dump2/ (e.g. photo_01.jpeg, photo_02.jpeg …)
+        2. Copy the button pattern below for each photo inside the dump2pane div
+        3. Remove the placeholder tile
+      -->
+      <div class="dump-pane active" data-dump-id="2" id="dump2pane">
+
+        <button class="tile" type="button" data-src="/images/dump2/photo_01.jpeg" data-photo-id="d2_photo_01" aria-label="Open Teddy photo 01">
+          <img src="/images/dump2/photo_01.jpeg" alt="Teddy photo 01" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 01</span>
+        </button>
+
+        <button class="tile" type="button" data-src="/images/dump2/photo_02.jpeg" data-photo-id="d2_photo_02" aria-label="Open Teddy photo 02">
+          <img src="/images/dump2/photo_02.jpeg" alt="Teddy photo 02" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 02</span>
+        </button>
+
+        <button class="tile" type="button" data-src="/images/dump2/photo_03.jpeg" data-photo-id="d2_photo_03" aria-label="Open Teddy photo 03">
+          <img src="/images/dump2/photo_03.jpeg" alt="Teddy photo 03" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 03</span>
+        </button>
+
+        <button class="tile" type="button" data-src="/images/dump2/photo_04.png" data-photo-id="d2_photo_04" aria-label="Open Teddy photo 04">
+          <img src="/images/dump2/photo_04.png" alt="Teddy photo 04" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 04</span>
+        </button>
+
+        <button class="tile" type="button" data-src="/images/dump2/photo_05.jpeg" data-photo-id="d2_photo_05" aria-label="Open Teddy photo 05">
+          <img src="/images/dump2/photo_05.jpeg" alt="Teddy photo 05" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 05</span>
+        </button>
+
+        <button class="tile" type="button" data-src="/images/dump2/photo_06.jpeg" data-photo-id="d2_photo_06" aria-label="Open Teddy photo 06">
+          <img src="/images/dump2/photo_06.jpeg" alt="Teddy photo 06" loading="lazy" />
+          <span class="badge">🐾 Teddy photo 06</span>
+        </button>
+
+      </div>
     </main>
   </div>
 
@@ -354,20 +449,43 @@
   </div>
 
   <script>
-    // Simple lightbox (mobile-friendly)
-    const tiles = Array.from(document.querySelectorAll('.tile'));
-    const lightbox = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lbImg');
-    const lbTitle = document.getElementById('lbTitle');
-    const lbClose = document.getElementById('lbClose');
-    const lbPrev = document.getElementById('lbPrev');
-    const lbNext = document.getElementById('lbNext');
+    // ── Dump switcher ──────────────────────────────────────────────
+    const swBtns  = document.querySelectorAll('.sw-btn');
+    const panes   = document.querySelectorAll('.dump-pane');
+    const dumpSub = document.getElementById('dumpSub');
+    let activeDump = '2';
 
+    function switchDump(dumpId) {
+      if (activeDump === dumpId) return;
+      activeDump = dumpId;
+      swBtns.forEach(b => b.classList.toggle('active', b.dataset.dump === dumpId));
+      panes.forEach(p => p.classList.toggle('active', p.dataset.dumpId === dumpId));
+      dumpSub.textContent = `Dump #${dumpId}`;
+      if (window.posthog) posthog.capture('teddy_dump_switch', { to_dump: dumpId });
+    }
+
+    swBtns.forEach(b => b.addEventListener('click', () => switchDump(b.dataset.dump)));
+
+    // ── Lightbox ───────────────────────────────────────────────────
+    const lightbox = document.getElementById('lightbox');
+    const lbImg    = document.getElementById('lbImg');
+    const lbTitle  = document.getElementById('lbTitle');
+    const lbClose  = document.getElementById('lbClose');
+    const lbPrev   = document.getElementById('lbPrev');
+    const lbNext   = document.getElementById('lbNext');
+
+    let currentTiles = [];
     let currentIndex = 0;
 
-    function openAt(i){
+    function getActiveTiles() {
+      const pane = document.querySelector('.dump-pane.active');
+      return pane ? Array.from(pane.querySelectorAll('.tile')) : [];
+    }
+
+    function openAt(i) {
+      currentTiles = getActiveTiles();
       currentIndex = i;
-      const t = tiles[currentIndex];
+      const t = currentTiles[currentIndex];
       const src = t.getAttribute('data-src');
       const photoId = t.getAttribute('data-photo-id') || `photo_${String(i+1).padStart(2,'0')}`;
       lbImg.src = src;
@@ -375,59 +493,45 @@
       lbTitle.textContent = `🐾 ${photoId}`;
       lightbox.classList.add('open');
       lightbox.setAttribute('aria-hidden', 'false');
-
-      // Optional: track “opened” separately from “clicked”
       if (window.posthog) {
-        posthog.capture('teddy_photo_opened', {
-          photo_id: photoId,
-          src: src,
-          dump_id: document.querySelector('#gallery')?.getAttribute('data-dump-id') || '1'
-        });
+        posthog.capture('teddy_photo_opened', { photo_id: photoId, src, dump_id: activeDump });
       }
     }
 
-    function closeLb(){
+    function closeLb() {
       lightbox.classList.remove('open');
       lightbox.setAttribute('aria-hidden', 'true');
       lbImg.src = '';
     }
 
-    function prev(){
-      openAt((currentIndex - 1 + tiles.length) % tiles.length);
-    }
+    function prev() { openAt((currentIndex - 1 + currentTiles.length) % currentTiles.length); }
+    function next() { openAt((currentIndex + 1) % currentTiles.length); }
 
-    function next(){
-      openAt((currentIndex + 1) % tiles.length);
-    }
-
-    tiles.forEach((tile, idx) => {
-      tile.addEventListener('click', () => openAt(idx), { passive: true });
+    // Delegated click — works for both dumps without re-binding
+    document.getElementById('gallery').addEventListener('click', (e) => {
+      const tile = e.target.closest('.tile');
+      if (!tile) return;
+      const tiles = getActiveTiles();
+      const idx = tiles.indexOf(tile);
+      if (idx !== -1) openAt(idx);
     });
 
     lbClose.addEventListener('click', closeLb);
-
-    // Click outside the card closes
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) closeLb();
-    });
-
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLb(); });
     lbPrev.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
     lbNext.addEventListener('click', (e) => { e.stopPropagation(); next(); });
 
-    // Keyboard support
     document.addEventListener('keydown', (e) => {
       if (!lightbox.classList.contains('open')) return;
-      if (e.key === 'Escape') closeLb();
-      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'Escape')     closeLb();
+      if (e.key === 'ArrowLeft')  prev();
       if (e.key === 'ArrowRight') next();
     });
 
-    // Swipe support (basic)
+    // Swipe support
     let touchX = null;
     const lbBody = document.getElementById('lbBody');
-    lbBody.addEventListener('touchstart', (e) => {
-      touchX = e.changedTouches[0].clientX;
-    }, { passive: true });
+    lbBody.addEventListener('touchstart', (e) => { touchX = e.changedTouches[0].clientX; }, { passive: true });
     lbBody.addEventListener('touchend', (e) => {
       if (touchX === null) return;
       const dx = e.changedTouches[0].clientX - touchX;
